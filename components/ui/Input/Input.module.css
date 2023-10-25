@@ -1,0 +1,17 @@
+.root {
+    @apply flex flex-col gap-2 text-gray-700 inline-block min-h-[48px]  
+}
+
+.input {
+    height: 48px;
+    @apply bg-gray-100 rounded-lg py-3 px-[0.87rem];
+}
+
+.error {
+    @apply border border-error-300  border-none
+}
+
+.error_text{
+    @apply text-error-500
+}
+
