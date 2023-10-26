@@ -1,5 +1,3 @@
-import SinglePost from "../posts/sections/SinglePost";
-
 const getAllPosts = async () => {
   new Promise((resolve) => setTimeout(resolve, 3000));
   try {

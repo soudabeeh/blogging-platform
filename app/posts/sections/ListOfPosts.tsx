@@ -1,9 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
 import SinglePost from "./SinglePost";
-import { PostListContext } from "@/context/PostListProvider";
-import getAllPosts from "@/app/actions/getAllPosts";
 
 type SinglePostProp = {
   promise: Promise<SinglePost[] | undefined>;

@@ -9,7 +9,6 @@ import DynamicIcon from "@/components/ui/DynamicIcon";
 import PostImg from "@/public/assets/images/singlePost.png";
 import { SinglePost } from "@/types";
 import deleteSinglePost from "@/app/actions/deleteSinglePost";
-import getAllPosts from "@/app/actions/getAllPosts";
 import { useContext } from "react";
 import { PostListContext } from "@/context/PostListProvider";
 
@@ -21,9 +20,8 @@ type SinglePostProp = {
   post: SinglePost;
 };
 const SinglePost = ({ post }: SinglePostProp) => {
-  const postContext = useContext(PostListContext);
   const { modalProps, handelOpen: showModal } = useModal();
-  const { modalProps: detailModalProps, handelOpen: showDetailModal } =
+  const { modalProps: detailModalProps, handelOpen: showConfirmModal } =
     useModal();
 
   const deletePostItem = async (postId: string) => {
@@ -40,10 +38,10 @@ const SinglePost = ({ post }: SinglePostProp) => {
 
   return (
     <>
-      <div className='m-auto col-span-1 w-full'>
-        <div className='relative'>
-          <div className='flex flex-col bg-gray-50 rounded-lg'>
-            <div className='flex'>
+      <div onClick={showModal} className='m-auto col-span-1 w-full'>
+        <div className='flex flex-col bg-gray-50 rounded-lg'>
+          <div className='flex justify-between'>
+            <div>
               <Image
                 src={PostImg}
                 alt='Picture of the post'
@@ -51,13 +49,13 @@ const SinglePost = ({ post }: SinglePostProp) => {
               />
               <p className='text-base font-semibold p-2'>{post.title}</p>
             </div>
-            <div className='p-2'>
-              <div>{post.body}</div>
-            </div>
-          </div>
-          <div className='flex gap-4 absolute top-0 h-full hover:backdrop-blur w-full'>
-            <div className='absolute flex top-0 right-10 justify-center h-full items-center left-10 gap-6 opacity-0 hover:opacity-100'>
-              <div onClick={showDetailModal}>
+            <div className='flex gap-4 pt-2 pl-4'>
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showConfirmModal();
+                }}
+              >
                 <DynamicIcon iconName={"trash"} />
               </div>
               <div onClick={showModal}>
@@ -65,7 +63,20 @@ const SinglePost = ({ post }: SinglePostProp) => {
               </div>
             </div>
           </div>
+          <div className='p-2'>
+            <div>{post.body}</div>
+          </div>
         </div>
+        {/* <div className='flex gap-4 absolute top-0 h-full hover:backdrop-blur w-full'>
+            <div className='absolute flex top-0 right-10 justify-center h-full items-center left-10 gap-6 opacity-0 hover:opacity-100'>
+              <div onClick={showConfirmModal}>
+                <DynamicIcon iconName={"trash"} />
+              </div>
+              <div onClick={showModal}>
+                <DynamicIcon iconName={"edit"} />
+              </div>
+            </div>
+          </div> */}
       </div>
       <Modal {...modalProps} title='افزودن عکس'>
         <div className='p-6  w-[1000px] grid grid-cols-12 gap-6'>

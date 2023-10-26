@@ -1,6 +1,3 @@
-import { revalidateTag, revalidatePath } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
-
 const deleteSinglePost = async (postId: string) => {
   try {
     const response = await fetch(
