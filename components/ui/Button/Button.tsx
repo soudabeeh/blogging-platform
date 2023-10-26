@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes,  } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import cn from "classnames";
 import styles from "./Button.module.css";
 import Link from "next/link";
@@ -13,18 +13,18 @@ type Props = {
   iconRight?: JSX.Element;
   iconLeft?: JSX.Element;
   textSize?: TButtonTextSize;
-  isLinked?:boolean
-  href?:string
-  children: React.ReactNode
-  className?:string
-}
+  isLinked?: boolean;
+  href?: string;
+  children: React.ReactNode;
+  className?: string;
+};
 
 const buttonStyles = {
   variant: {
     primary:
       "min-w-[112px] rounded-xl bg-primary-600 text-white  font-semibold ",
     secondary: " ",
-    text: " min-w-[112px] rounded-xl  text-gray-700  font-semibold border-2 border-gray-300 ",
+    text: " min-w-[112px] rounded-xl  text-gray-700  font-semibold border-1 border-gray-300 ",
     outlined:
       "rounded-xl  font-semibold  order border border-gray-300 flex justify-center",
   },
@@ -64,8 +64,8 @@ const Button = (props: Props) => {
     iconRight,
     iconLeft,
     textSize = "text-base",
-    isLinked=false,
-    href="#"
+    isLinked = false,
+    href = "#",
   } = props;
   const buttonStyle = cn(
     className,
@@ -78,23 +78,36 @@ const Button = (props: Props) => {
     textSize
   );
 
-  const childJsx = <> {iconRight ? iconRight : null}
-  {children}
-  {iconLeft ? iconLeft : null}</>
+  const childJsx = (
+    <>
+      {" "}
+      {iconRight ? iconRight : null}
+      {children}
+      {iconLeft ? iconLeft : null}
+    </>
+  );
 
   return (
     <>
-    {
-      isLinked?<Link {...props} className={buttonStyle} href={href} passHref prefetch={false}>
-     
-      {childJsx}
-     
-      </Link>:<>  <button {...props} className={buttonStyle}>
-     {childJsx}
-      </button></>
-    }
+      {isLinked ? (
+        <Link
+          {...props}
+          className={buttonStyle}
+          href={href}
+          passHref
+          prefetch={false}
+        >
+          {childJsx}
+        </Link>
+      ) : (
+        <>
+          {" "}
+          <button {...props} className={buttonStyle}>
+            {childJsx}
+          </button>
+        </>
+      )}
     </>
-  
   );
 };
 
