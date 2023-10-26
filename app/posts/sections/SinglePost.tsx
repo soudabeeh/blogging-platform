@@ -10,6 +10,8 @@ import PostImg from "@/public/assets/images/singlePost.png";
 import { SinglePost } from "@/types";
 import deleteSinglePost from "@/app/actions/deleteSinglePost";
 import getAllPosts from "@/app/actions/getAllPosts";
+import { useContext } from "react";
+import { PostListContext } from "@/context/PostListProvider";
 
 const DynamicButton = dynamic(() => import("@/components/ui/Button/Button"));
 const DynamicAvatar = dynamic(() => import("@/components/ui/Avatar"));
@@ -19,6 +21,7 @@ type SinglePostProp = {
   post: SinglePost;
 };
 const SinglePost = ({ post }: SinglePostProp) => {
+  const postContext = useContext(PostListContext);
   const { modalProps, handelOpen: showModal } = useModal();
   const { modalProps: detailModalProps, handelOpen: showDetailModal } =
     useModal();
@@ -27,9 +30,14 @@ const SinglePost = ({ post }: SinglePostProp) => {
     const deletePost = await deleteSinglePost(postId);
     if (deletePost?.status === 200) {
       detailModalProps.onClose();
-      await getAllPosts();
+      revalidate();
     }
   };
+
+  const revalidate = async () => {
+    await fetch("api/revalidate?path=/posts&secret=BloggingPlatform");
+  };
+
   return (
     <>
       <div className='m-auto col-span-1 w-full'>

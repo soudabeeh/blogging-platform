@@ -1,4 +1,3 @@
-
 import "./globals.css";
 import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
@@ -17,11 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps) {
-
   return (
     <html lang='en' className={vazirmatn.className} dir='rtl'>
       <body className='bg-white'>
-     <Header />
+        <Header />
         {children}
       </body>
     </html>
