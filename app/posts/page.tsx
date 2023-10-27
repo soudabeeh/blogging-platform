@@ -8,8 +8,8 @@ import ListOfPosts from "./sections/ListOfPosts";
 import { Suspense } from "react";
 
 const Post = async () => {
-  const listOfPosts = getAllPosts();
-  console.log("listOfPosts", listOfPosts);
+  const listOfPosts = getAllPosts(1);
+  // console.log("listOfPosts______", listOfPosts);
   const single = await getSinglePost("1");
   // console.log("single", single);
   return (

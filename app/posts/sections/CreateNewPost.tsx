@@ -1,22 +1,74 @@
 "use client";
 
-
 import dynamic from "next/dynamic";
+import useModal from "@/hooks/use-modal";
+import Modal from "@/ui/Modal";
+import { useForm } from "react-hook-form";
+import Input from "@/components/ui/Input";
+
+import { revalidatePosts } from "@/app/actions";
+import createSinglePost from "@/app/actions/createSinglePost";
+
 const DynamicButton = dynamic(() => import("@/components/ui/Button/Button"));
 
+const CreateNewPost = () => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isDirty, isValid },
+  } = useForm<any>({});
 
-const DynamicInputFile = dynamic(
-  () => import("@/components/ui/InputFileWrapper")
-);
+  const { modalProps: createModalProps, handelOpen: showCreatePostModal } =
+    useModal();
 
-const CreateNewPost = ()=>{
-    return(
-        <>
-         <DynamicInputFile onSelectFile={() => console.log("onSelectFile")}>
-          <DynamicButton>افزودن پست</DynamicButton>
-        </DynamicInputFile>
-        </>
-    )
-}
+  const onSubmit = async (data: any) => {
+    const res = await createSinglePost(data);
+    if (res?.status === 201 || res?.status === 200) {
+      createModalProps.onClose();
+      revalidatePosts();
+    }
+  };
 
-export default CreateNewPost
+  return (
+    <>
+      <DynamicButton onClick={showCreatePostModal}>افزودن پست</DynamicButton>
+      <Modal {...createModalProps} title='ایجاد پست'>
+        <div className=' w-[900px]'>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className='flex flex-col gap-4 p-4'
+          >
+            <div className='flex flex-col'>
+              <div className='grid grid-cols-2 gap-4'>
+                <Input
+                  {...register("title")}
+                  label='عنوان'
+                  className='w-full'
+                />
+                <Input
+                  {...register("userId")}
+                  label='ایدی کاربر'
+                  className='w-full'
+                />
+              </div>
+
+              <Input {...register("body")} label='توضیحات' />
+            </div>
+            <div className='flex justify-end pt-4 px-4 '>
+              <DynamicButton
+                type='submit'
+                className='h-fit'
+                disabled={isSubmitting}
+              >
+                ایجاد
+              </DynamicButton>
+            </div>
+          </form>
+        </div>
+      </Modal>
+    </>
+  );
+};
+
+export default CreateNewPost;

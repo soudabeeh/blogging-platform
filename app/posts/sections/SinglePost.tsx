@@ -9,8 +9,7 @@ import DynamicIcon from "@/components/ui/DynamicIcon";
 import PostImg from "@/public/assets/images/singlePost.png";
 import { SinglePost } from "@/types";
 import deleteSinglePost from "@/app/actions/deleteSinglePost";
-import { useContext } from "react";
-import { PostListContext } from "@/context/PostListProvider";
+import { revalidatePosts } from "@/app/actions";
 
 const DynamicButton = dynamic(() => import("@/components/ui/Button/Button"));
 const DynamicAvatar = dynamic(() => import("@/components/ui/Avatar"));
@@ -21,25 +20,26 @@ type SinglePostProp = {
 };
 const SinglePost = ({ post }: SinglePostProp) => {
   const { modalProps, handelOpen: showModal } = useModal();
-  const { modalProps: detailModalProps, handelOpen: showConfirmModal } =
+  const { modalProps: confirmModalProps, handelOpen: showConfirmModal } =
     useModal();
 
   const deletePostItem = async (postId: string) => {
     const deletePost = await deleteSinglePost(postId);
     if (deletePost?.status === 200) {
-      detailModalProps.onClose();
+      confirmModalProps.onClose();
       revalidate();
     }
   };
 
   const revalidate = async () => {
-    await fetch("api/revalidate?path=/posts&secret=BloggingPlatform");
+    revalidatePosts();
+    // await fetch("api/revalidate?path=/posts&secret=BloggingPlatform");
   };
 
   return (
     <>
       <div onClick={showModal} className='m-auto col-span-1 w-full'>
-        <div className='flex flex-col bg-gray-50 rounded-lg'>
+        <div className='flex flex-col bg-gray-50 rounded-lg max-h-[300px] min-h-[250px] overflow-hidden'>
           <div className='flex justify-between'>
             <div>
               <Image
@@ -64,7 +64,7 @@ const SinglePost = ({ post }: SinglePostProp) => {
             </div>
           </div>
           <div className='p-2'>
-            <div>{post.body}</div>
+            <div className='overflow-hidden text-ellipsis'>{post.body}</div>
           </div>
         </div>
         {/* <div className='flex gap-4 absolute top-0 h-full hover:backdrop-blur w-full'>
@@ -78,7 +78,7 @@ const SinglePost = ({ post }: SinglePostProp) => {
             </div>
           </div> */}
       </div>
-      <Modal {...modalProps} title='افزودن عکس'>
+      <Modal {...modalProps} title='جزئیات پست'>
         <div className='p-6  w-[1000px] grid grid-cols-12 gap-6'>
           <div className='col-span-5'>
             <div className='flex flex-col justify-between h-full'>
@@ -128,7 +128,7 @@ const SinglePost = ({ post }: SinglePostProp) => {
           </div>
         </div>
       </Modal>
-      <Modal {...detailModalProps} bodyClassName={"w-[425px]"} title='حذف'>
+      <Modal {...confirmModalProps} bodyClassName={"w-[425px]"} title='حذف'>
         <div className='flex flex-col gap-6 p-4'>
           <div className='text-sm'>آیا از حذف این پست اطمینان دارید؟</div>
           <div className='flex justify-end gap-2 items-center'>
@@ -141,7 +141,7 @@ const SinglePost = ({ post }: SinglePostProp) => {
             <DynamicButton
               variant='text'
               className='h-fit'
-              onClick={detailModalProps.onClose}
+              onClick={confirmModalProps.onClose}
             >
               انصراف
             </DynamicButton>
