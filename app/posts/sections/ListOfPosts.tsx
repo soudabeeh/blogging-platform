@@ -3,11 +3,12 @@
 import SinglePost from "./SinglePost";
 
 type SinglePostProp = {
-  promise: Promise<SinglePost[] | undefined>;
+  listOfPosts: SinglePost[] | undefined;
 };
 
-const ListOfPosts = async ({ promise }: SinglePostProp) => {
-  const listOfPosts = await promise;
+const ListOfPosts = ({ listOfPosts }: SinglePostProp) => {
+  // const listOfPosts = await promise;
+
   return (
     <>
       {listOfPosts?.map((post, index) => {

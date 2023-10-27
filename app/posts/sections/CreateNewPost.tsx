@@ -8,6 +8,7 @@ import Input from "@/components/ui/Input";
 
 import { revalidatePosts } from "@/app/actions";
 import createSinglePost from "@/app/actions/createSinglePost";
+import TextArea from "@/components/ui/TextArea";
 
 const DynamicButton = dynamic(() => import("@/components/ui/Button/Button"));
 
@@ -52,8 +53,11 @@ const CreateNewPost = () => {
                   className='w-full'
                 />
               </div>
-
-              <Input {...register("body")} label='توضیحات' />
+              <TextArea
+                {...register("body")}
+                className='w-full'
+                label='توضیحات'
+              />
             </div>
             <div className='flex justify-end pt-4 px-4 '>
               <DynamicButton

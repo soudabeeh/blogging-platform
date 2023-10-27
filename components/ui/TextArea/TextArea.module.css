@@ -1,16 +1,15 @@
 .root {
-    @apply flex flex-col gap-2 text-gray-700 inline-block min-h-[48px]  
+    @apply flex flex-col gap-2 text-gray-700 inline-block min-h-[56px]  
 }
 
-.input {
-    height: 48px;
+.textarea {
     @apply bg-gray-100 rounded-lg py-3 px-[0.87rem];
-    width: auto;
-   
 }
-.input:disabled{
+
+.textarea:disabled{
     @apply bg-white
 }
+
 .error {
     @apply border border-error-300  border-none
 }
