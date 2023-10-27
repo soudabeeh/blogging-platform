@@ -47,7 +47,7 @@ const CreateNewPost = () => {
       <div>
         <DynamicButton onClick={showCreatePostModal}>افزودن پست</DynamicButton>
         <Modal {...createModalProps} title='ایجاد پست'>
-          <div className=' w-[900px]'>
+          <div className='w-[300px] xl:w-[900px]'>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className='flex flex-col gap-4 p-4'

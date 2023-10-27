@@ -50,10 +50,14 @@ const PostDetailModal = ({
 
   return (
     <>
-      <Modal {...modalProps} title={`کاربر ${post.userId}`}>
+      <Modal
+        {...modalProps}
+        title={`کاربر ${post.userId}`}
+        bodyClassName={"w-[300px] xl:w-auto"}
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='p-6  w-[1000px] grid grid-cols-12 gap-6'>
-            <div className='col-span-5'>
+          <div className='p-6  w-[300px] grid grid-cols-12 gap-6 xl:w-[1000px]'>
+            <div className='col-span-12 xl:col-span-5'>
               <div className='flex flex-col justify-between h-full'>
                 <div className='flex flex-col gap-6 border-b border-gray-100 pb-4 '>
                   <div className='flex justify-between'>
@@ -77,9 +81,6 @@ const PostDetailModal = ({
                           defaultValue={post.title}
                           disabled={!isEditingMode}
                         />
-                        {/* <div className='text-gray-700 font-semibold text-base leading-7'>
-                          {post.title}
-                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -89,7 +90,6 @@ const PostDetailModal = ({
                     defaultValue={post.body}
                     disabled={!isEditingMode}
                   />
-                  {/* <p className='text-sm font-normal leading-7'>{post.body}</p> */}
                 </div>
 
                 {isEditingMode && (
@@ -114,7 +114,7 @@ const PostDetailModal = ({
                 )}
               </div>
             </div>
-            <div className='col-span-7 w-auto h-auto overflow-hidden rounded-bl-3xl rounded-tl-3xl'>
+            <div className='hidden col-span-7 w-auto h-auto overflow-hidden rounded-bl-3xl rounded-tl-3xl xl:grid'>
               <Image
                 src={ModalPostImg}
                 alt='Picture of the modal post'
