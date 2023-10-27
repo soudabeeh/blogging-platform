@@ -1,9 +1,12 @@
-const getAllPosts = async () => {
-  new Promise((resolve) => setTimeout(resolve, 3000));
+const getAllPosts = async (pageNumber: number) => {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-      next: { tags: ["posts"] },
-    });
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${pageNumber || 1}`,
+      {
+        next: { tags: ["posts"] },
+        cache: "no-store",
+      }
+    );
     if (!response.ok) {
       throw new Error("failed to fetch posts");
     }

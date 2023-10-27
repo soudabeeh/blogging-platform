@@ -1,20 +1,21 @@
-import { InputHTMLAttributes, forwardRef } from "react";
+import { forwardRef, TextareaHTMLAttributes } from "react";
 import cn from "classnames";
-import styles from "./Input.module.css";
+import styles from "./TextArea.module.css";
 
-interface Props extends Omit<InputHTMLAttributes<any>, "onChange"> {
+interface Props extends Omit<TextareaHTMLAttributes<any>, "onChange"> {
   label?: string;
   errorMessage?: string;
   customContainer?: string;
 }
 
-export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
+export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
   const { className, label, children, errorMessage, customContainer, ...rest } =
     props;
-  const inputClassName = cn(styles.input, {
-    [styles.error]: errorMessage,
-    className,
-  });
+  const textareaClassName = cn(
+    styles.textarea,
+    { [styles.error]: errorMessage },
+    className
+  );
 
   const customContainerClass = cn(styles.root, customContainer);
   return (
@@ -24,9 +25,9 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
           {label}
         </label>
       )}
-      <input
-        id={label || "input"}
-        className={inputClassName}
+      <textarea
+        id={label || "textarea"}
+        className={textareaClassName}
         ref={ref}
         {...rest}
       />
@@ -35,6 +36,6 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
   );
 });
 
-Input.displayName = "Input";
+TextArea.displayName = "TextArea";
 
-export default Input;
+export default TextArea;

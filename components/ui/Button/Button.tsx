@@ -18,6 +18,8 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  type?: any;
+  disabled?: any;
 };
 
 const buttonStyles = {
