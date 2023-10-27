@@ -3,7 +3,12 @@ import cn from "classnames";
 import styles from "./Button.module.css";
 import Link from "next/link";
 
-type TButtonVaraint = "primary" | "secondary" | "text" | "outlined";
+type TButtonVaraint =
+  | "primary"
+  | "secondary"
+  | "text"
+  | "outlined"
+  | "disabled";
 type TButtonSize = "sm" | "md" | "xl" | "2xl";
 type TButtonTextSize = "text-sm" | "text-base";
 
@@ -30,6 +35,8 @@ const buttonStyles = {
     text: " min-w-[112px] rounded-xl  text-gray-700  font-semibold border-1 border-gray-300 ",
     outlined:
       "rounded-xl  font-semibold  order border border-gray-300 flex justify-center",
+    disabled:
+      "rounded-xl  font-regular  order flex justify-center text-gray-400 bg-gray-100",
   },
   loading: {
     primary: "",

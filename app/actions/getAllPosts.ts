@@ -3,8 +3,7 @@ const getAllPosts = async (pageNumber: number) => {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts?_page=${pageNumber || 1}`,
       {
-        next: { tags: ["posts"] },
-        cache: "no-store",
+        next: { tags: ["posts"], revalidate: 1200 },
       }
     );
     if (!response.ok) {

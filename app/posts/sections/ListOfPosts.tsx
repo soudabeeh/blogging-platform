@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import SinglePost from "./SinglePost";
 
 type SinglePostProp = {
@@ -7,8 +8,11 @@ type SinglePostProp = {
 };
 
 const ListOfPosts = ({ listOfPosts }: SinglePostProp) => {
-  // const listOfPosts = await promise;
+  const [prePosts, setPrevPosts] = useState(listOfPosts);
 
+  if (listOfPosts !== prePosts) {
+    //check here
+  }
   return (
     <>
       {listOfPosts?.map((post, index) => {

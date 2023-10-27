@@ -8,6 +8,8 @@ import Input from "@/components/ui/Input";
 import TextArea from "../ui/TextArea";
 import updateSinglePost from "@/app/actions/updateSinglePost";
 import { revalidatePosts } from "@/app/actions";
+import { toast } from "react-toastify";
+import Toast from "@/components/ui/Toast";
 
 const DynamicAvatar = dynamic(() => import("@/components/ui/Avatar"));
 const DynamicButton = dynamic(() => import("@/components/ui/Button/Button"));
@@ -23,7 +25,14 @@ const PostDetailModal = ({
   modalProps,
   isEditingMode,
 }: PostDetailModal) => {
-  const { control, handleSubmit, setValue, getValues, register } = useForm();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    getValues,
+    register,
+    formState: { errors, isSubmitting, isDirty, isValid },
+  } = useForm();
 
   const onSubmit = async (data: any) => {
     const postData = {
@@ -35,6 +44,7 @@ const PostDetailModal = ({
     if (res?.status === 201 || res?.status === 200) {
       modalProps.onClose();
       revalidatePosts();
+      toast("پست با موفقیت آپدیت شد.");
     }
   };
 
@@ -85,7 +95,12 @@ const PostDetailModal = ({
                 {isEditingMode && (
                   <div className='flex flex-col pt-4 gap-4 border-t border-gray-100'>
                     <div className='flex gap-3'>
-                      <DynamicButton className='h-fit' type={"submit"}>
+                      <DynamicButton
+                        className='h-fit'
+                        type={"submit"}
+                        disabled={!isDirty}
+                        variant={isDirty ? "primary" : "disabled"}
+                      >
                         ذخیره تغییرات
                       </DynamicButton>
 
@@ -109,6 +124,7 @@ const PostDetailModal = ({
           </div>
         </form>
       </Modal>
+      <Toast />
     </>
   );
 };
