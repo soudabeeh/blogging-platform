@@ -10,6 +10,7 @@ A blog platform such as post template generation.
 - TypeScript
 - TailwindCSS
 - React
+- Yup for input validation
 
 ---
 
@@ -20,6 +21,7 @@ A blog platform such as post template generation.
 - update post
 - delete post
 - scroll pagination
+- validation with yup
 
 ### Upcoming Features
 
