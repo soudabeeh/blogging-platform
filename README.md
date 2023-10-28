@@ -18,8 +18,8 @@ A blog platform such as post template generation.
 
 - list of posts based on next13 data fetching method
 - create new post
-- update post
-- delete post
+- update the existing post
+- delete the existing post
 - scroll pagination
 - validation with yup
 
